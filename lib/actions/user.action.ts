@@ -10,7 +10,7 @@ import {
 import { revalidatePath } from "next/cache";
 import Question from "@/database/question.model";
 
-export async function getUserById(params: { userId: any }) {
+export async function getUserById(params: any) {
   try {
     connectToDatabase();
     const { userId } = params;
