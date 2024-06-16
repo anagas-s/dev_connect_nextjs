@@ -57,7 +57,7 @@ export async function createQuestion(params: CreateQuestionParams) {
     // Create an interaction record for the user's ask_question action
     // Increment author's reputation for asking a question
 
-    // revalidatePath(path);
+    revalidatePath(path);
   } catch (error) {
     throw error;
   }
