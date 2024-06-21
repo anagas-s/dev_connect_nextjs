@@ -9,7 +9,7 @@ export const connectToDatabase = async () => {
     return console.log("MONGODB_URL is not defined");
   }
   if (isConnected) {
-    return console.log("MongoDB is already connected");
+    return console.log("Already connected to database");
   }
   try {
     await mongoose.connect(process.env.MONGODB_URL, {
