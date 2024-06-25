@@ -2,26 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import RenderTag from "./RenderTag";
-
-const hotQuestions = [
-  {
-    _id: "1",
-    title: "How do I use express as a custom server in nextjs?",
-  },
-  {
-    _id: "2",
-    title:
-      "Best practices for data fetching in a Next.js application with Server-Side Rendering (SSR)?",
-  },
-  {
-    _id: "3",
-    title: "Is it only me or the font is bolder than necessary?",
-  },
-  {
-    _id: "4",
-    title: "Redux vs Recoil as state management tool",
-  },
-];
+import { getHotQuestions } from "@/lib/actions/question.action";
 
 const popularTags = [
   { _id: "1", name: "javascript", totalQuestions: 5 },
@@ -31,7 +12,9 @@ const popularTags = [
   { _id: "5", name: "python", totalQuestions: 3 },
 ];
 
-const RightSidebar = () => {
+const RightSidebar = async () => {
+  const hotQuestions = await getHotQuestions();
+
   return (
     <section className="background-light900_dark200 light-border sticky right-0 top-0 flex h-screen flex-col  overflow-y-auto border-l p-6 pt-36 shadow-light-300 dark:shadow-none max-xl:hidden lg:w-[350px]  custom-scrollbar">
       <div>
@@ -40,7 +23,7 @@ const RightSidebar = () => {
           {hotQuestions.map((question) => {
             return (
               <Link
-                href={`/questions/${question._id}`}
+                href={`/question/${question._id}`}
                 key={question._id}
                 className="flex cursor-pointer items-center justify-between gap-7"
               >
