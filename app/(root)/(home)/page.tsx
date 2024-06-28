@@ -16,7 +16,6 @@ export default async function Home({ searchParams }: SearchParamsProps) {
     filter: searchParams.filter,
     page: searchParams.page ? +searchParams.page : 1,
   });
-  console.log(result.questions);
 
   return (
     <>
