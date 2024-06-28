@@ -1,7 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ReloadIcon } from "@radix-ui/react-icons";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
 const GlobalResult = () => {
+  const searchParams = useSearchParams();
   const [isLoading, setIsLoading] = useState(false);
+  const [result, setResult] = useState([
+    { type: "question", id: "1", title: "Nextjs question" },
+    { type: "question", id: "2", title: "React question" },
+    { type: "question", id: "3", title: "Javascript question" },
+  ]);
+  const global = searchParams.get("global");
+  const type = searchParams.get("type");
+
+  useEffect(() => {
+    const fetchResult = async () => {
+      setResult([]);
+      setIsLoading(true);
+
+      try {
+        // Fetch data
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+  }, [global, type]);
+
+  const renderLink = (type: string, id: string) => {
+    return "/";
+  };
   return (
     <div className="absolute top-full z-10 mt-3 w-full bg-light-800 py-5 shadow-sm dark:bg-dark-400 rounded-xl">
       <p className="text-dark400_light900 paragraph-semibold px-5">Filters</p>
@@ -19,7 +49,38 @@ const GlobalResult = () => {
             </p>
           </div>
         ) : (
-          <div>Content</div>
+          <div className="flex flex-col gap-2">
+            {result.length > 0 ? (
+              result.map((item: any, index: number) => (
+                <Link
+                  href={renderLink("type", "id")}
+                  key={item.type + item.id + index}
+                >
+                  <Image
+                    src="/assets/icons/tag.svg"
+                    alt="tag"
+                    width={18}
+                    height={18}
+                    className="flex w-full cursor-pointer items-start gap-3 px-5 py-2.5 hover:bg-light-700/50 dark:hover:bg-dark-500/50"
+                  />
+                  <div className="flex flex-col">
+                    <p className="body-medium text-dark200_light800 line-clamp-1">
+                      {item.title}
+                    </p>
+                    <p className="text-light400_light500 small-medium mt-1 font-bold capitalize">
+                      {item.type}
+                    </p>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <div className="flex-center flex-col px-5">
+                <p className="text-dark200_light800 body-regular px-5 py-2.5">
+                  Oops, no result Found
+                </p>
+              </div>
+            )}
+          </div>
         )}
       </div>
     </div>
