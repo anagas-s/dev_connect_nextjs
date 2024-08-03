@@ -95,11 +95,12 @@ export const removeKeysFromQuery = ({
   );
 };
 
+// eslint-disable-next-line no-redeclare
 interface BadgeParam {
   criteria: {
     type: keyof typeof BADGE_CRITERIA;
     count: number;
-  };
+  }[];
 }
 
 export const assignBadges = (params: BadgeParam) => {
@@ -108,15 +109,19 @@ export const assignBadges = (params: BadgeParam) => {
     SILVER: 0,
     BRONZE: 0,
   };
+
   const { criteria } = params;
-  criteria.forEach((item: any) => {
+
+  criteria.forEach((item) => {
     const { type, count } = item;
     const badgeLevels: any = BADGE_CRITERIA[type];
+
     Object.keys(badgeLevels).forEach((level: any) => {
       if (count >= badgeLevels[level]) {
         badgeCounts[level as keyof BadgeCounts] += 1;
       }
     });
   });
+
   return badgeCounts;
 };

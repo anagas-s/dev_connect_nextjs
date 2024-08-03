@@ -18,6 +18,7 @@ import Question from "@/database/question.model";
 import Tag from "@/database/tag.model";
 import Answer from "@/database/answer.model";
 import { assignBadges } from "../utils";
+import { BadgeCriteriaType } from "@/types";
 
 export async function getUserById(params: any) {
   try {
@@ -244,24 +245,18 @@ export async function getUserInfo(params: GetUserByIdParams) {
     ]);
 
     const criteria = [
+      { type: "QUESTION_COUNT" as BadgeCriteriaType, count: totalQuestions },
+      { type: "ANSWER_COUNT" as BadgeCriteriaType, count: totalAnswers },
       {
-        type: "QUESTION_COUNT",
-        count: totalQuestions,
-      },
-      {
-        type: "ANSWER_COUNT",
-        count: totalAnswers,
-      },
-      {
-        type: "QUESTION_UPVOTES",
+        type: "QUESTION_UPVOTES" as BadgeCriteriaType,
         count: questionUpvotes?.totalUpvotes || 0,
       },
       {
-        type: "ANSWER_UPVOTES",
+        type: "ANSWER_UPVOTES" as BadgeCriteriaType,
         count: answerUpvotes?.totalUpvotes || 0,
       },
       {
-        type: "TOTAL_VIEWS",
+        type: "TOTAL_VIEWS" as BadgeCriteriaType,
         count: questionViews?.totalViews || 0,
       },
     ];
